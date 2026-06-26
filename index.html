@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f6efe3" />
+  <title>虾子曰：回声之境｜第一关互动展示</title>
+  <style>
+    :root {
+      --paper:#f6efe3;
+      --paper-2:#fffaf1;
+      --ink:#51483f;
+      --muted:#8f8375;
+      --teal:#618f90;
+      --teal-2:#9fc9c5;
+      --gold:#c99f62;
+      --coral:#cf7056;
+      --line:rgba(101,86,68,.18);
+      --shadow:0 22px 70px rgba(65,55,43,.16);
+      --safe-bottom:max(16px,env(safe-area-inset-bottom));
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100%;
+      color:var(--ink);
+      font-family:"Avenir Next","PingFang SC","Noto Serif SC","Songti SC",serif;
+      background:
+        radial-gradient(circle at 52% -8%,rgba(255,255,255,.95),transparent 32%),
+        radial-gradient(circle at 93% 15%,rgba(97,143,144,.22),transparent 28%),
+        radial-gradient(circle at 10% 78%,rgba(201,159,98,.18),transparent 30%),
+        linear-gradient(180deg,#fbf7ee 0%,var(--paper) 54%,#efe8dc 100%);
+      overflow-x:hidden;
+    }
+    button{font:inherit}
+    .app{max-width:1180px;margin:0 auto;padding:20px 18px calc(46px + var(--safe-bottom))}
+    header{
+      position:sticky;
+      top:0;
+      z-index:30;
+      margin:0 -18px 18px;
+      padding:12px 18px;
+      background:rgba(246,239,227,.8);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(18px);
+    }
+    .bar{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .seal{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      color:var(--coral);
+      font-weight:900;
+      background:linear-gradient(135deg,#f7dfbf,#fff9ed);
+      border:1px solid rgba(201,159,98,.45);
+      box-shadow:0 8px 20px rgba(0,0,0,.06);
+    }
+    .brand h1{font-size:18px;line-height:1.15;margin:0;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand small{display:block;font-size:10px;letter-spacing:.16em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+    .nav{display:flex;gap:7px;overflow:auto;scrollbar-width:none}
+    .nav::-webkit-scrollbar{display:none}
+    .nav button{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.58);
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 11px;
+      font-size:12px;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+    .nav button.active{background:var(--teal);border-color:var(--teal);color:white}
+    .hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(320px,1.1fr);gap:28px;align-items:center;padding:24px 0 34px}
+    .kicker{font-size:12px;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+    .hero h2{font-size:clamp(36px,6.4vw,76px);line-height:1.02;margin:12px 0 14px;letter-spacing:.06em;font-weight:500}
+    .hero p{margin:0;color:#71665b;line-height:1.85;font-size:15px;max-width:640px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,250,241,.7);
+      color:var(--ink);
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      box-shadow:0 8px 24px rgba(65,55,43,.08);
+    }
+    .pill.primary{background:var(--teal);border-color:var(--teal);color:white}
+    .showcase{
+      position:relative;
+      min-height:520px;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:rgba(255,250,241,.68);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      cursor:grab;
+      user-select:none;
+    }
+    .showcase:active{cursor:grabbing}
+    .showcase::before,.showcase::after{
+      content:"";
+      position:absolute;
+      border:1px solid rgba(97,143,144,.2);
+      border-radius:50%;
+      inset:12%;
+      pointer-events:none;
+      animation:pulse 4.8s ease-in-out infinite;
+    }
+    .showcase::after{inset:22%;animation-delay:1.4s}
+    .hero-img{
+      position:absolute;
+      inset:28px 28px 96px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      background:#fff4e7;
+      overflow:hidden;
+    }
+    .hero-img img{width:100%;height:100%;object-fit:contain;transition:transform .45s ease,opacity .25s ease}
+    .showcase:hover .hero-img img{transform:scale(1.025)}
+    .hero-caption{
+      position:absolute;
+      left:20px;
+      right:20px;
+      bottom:18px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:14px;
+      align-items:center;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,250,241,.84);
+      backdrop-filter:blur(14px);
+    }
+    .hero-caption b{display:block;color:var(--teal);letter-spacing:.08em;font-size:13px;text-transform:uppercase}
+    .hero-caption span{display:block;margin-top:5px;color:#6f655a;font-size:13px;line-height:1.55}
+    .count{font-size:26px;color:var(--gold);font-weight:500}
+    .track{display:flex;gap:7px;margin-top:14px}
+    .track button{
+      height:6px;
+      flex:1;
+      border:0;
+      border-radius:999px;
+      background:rgba(97,143,144,.2);
+      cursor:pointer;
+    }
+    .track button.active{background:var(--teal)}
+    .section{margin:20px 0 50px;scroll-margin-top:88px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}
+    .section h3{font-size:24px;margin:0;letter-spacing:.06em;font-weight:500}
+    .meta{font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .card{
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:rgba(255,250,241,.72);
+      box-shadow:0 14px 42px rgba(65,55,43,.1);
+      overflow:hidden;
+      position:relative;
+      cursor:pointer;
+      transform:translateY(18px);
+      opacity:0;
+      transition:transform .35s ease,opacity .35s ease,box-shadow .25s ease,border-color .25s ease;
+    }
+    .card.in{transform:translateY(0);opacity:1}
+    .card:hover,.card:focus-within{box-shadow:0 22px 58px rgba(65,55,43,.18);border-color:rgba(97,143,144,.4);transform:translateY(-3px)}
+    .card.active{outline:2px solid rgba(97,143,144,.5)}
+    .art-wrap{aspect-ratio:4/3;background:#fff4e7;display:grid;place-items:center;overflow:hidden}
+    .art{width:100%;height:100%;object-fit:contain;transition:transform .32s ease}
+    .card:hover .art{transform:scale(1.035)}
+    .caption{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;padding:13px 14px 15px;border-top:1px solid var(--line)}
+    .caption strong{display:block;color:var(--teal);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+    .caption p{margin:0;color:#6d6359;line-height:1.58;font-size:13px}
+    .tag{padding:7px 9px;border-radius:999px;background:rgba(97,143,144,.12);color:var(--teal);border:1px solid rgba(97,143,144,.2);font-size:12px;white-space:nowrap}
+    .stage{
+      position:fixed;
+      inset:0;
+      z-index:80;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(40,35,31,.84);
+      backdrop-filter:blur(16px);
+    }
+    .stage.show{display:flex}
+    .stage-inner{width:min(100%,980px);max-height:94vh;display:grid;gap:12px}
+    .stage img{max-width:100%;max-height:78vh;object-fit:contain;border-radius:8px;box-shadow:0 28px 90px rgba(0,0,0,.38);background:var(--paper)}
+    .stage-info{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:10px;color:white}
+    .stage-info b{font-weight:500;letter-spacing:.04em;min-width:0}
+    .icon-btn{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.12);
+      color:inherit;
+      cursor:pointer;
+    }
+    .controls{
+      position:fixed;
+      left:50%;
+      bottom:calc(14px + var(--safe-bottom));
+      transform:translateX(-50%);
+      z-index:35;
+      display:flex;
+      gap:8px;
+      padding:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,250,241,.78);
+      backdrop-filter:blur(16px);
+      box-shadow:0 14px 40px rgba(0,0,0,.12);
+    }
+    .controls button{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid var(--line);
+      background:white;
+      color:var(--ink);
+      font-size:18px;
+      cursor:pointer;
+    }
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:calc(78px + var(--safe-bottom));
+      z-index:60;
+      transform:translate(-50%,14px);
+      opacity:0;
+      padding:10px 14px;
+      border-radius:999px;
+      color:white;
+      background:rgba(65,55,43,.84);
+      pointer-events:none;
+      transition:.25s ease;
+      font-size:13px;
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    footer{text-align:center;color:var(--muted);font-size:12px;letter-spacing:.12em;padding:12px 0 2px}
+    @keyframes pulse{50%{transform:scale(1.04);opacity:.46}}
+    @media (max-width:920px){
+      .hero{grid-template-columns:1fr}
+      .showcase{min-height:520px}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width:640px){
+      .app{padding-left:14px;padding-right:14px}
+      header{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+      .bar{display:grid;grid-template-columns:1fr;gap:12px}
+      .brand h1{font-size:16px}
+      .hero{padding-top:12px}
+      .showcase{min-height:430px;border-radius:18px}
+      .hero-img{inset:16px 16px 108px;border-radius:12px}
+      .hero-caption{grid-template-columns:1fr;left:12px;right:12px;bottom:12px}
+      .count{font-size:20px}
+      .section-head{display:block}
+      .meta{margin-top:6px}
+      .grid{grid-template-columns:1fr}
+      .stage-info{grid-template-columns:auto 1fr auto}
+      .stage-info .stage-prev{display:none}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+      .card{transform:none;opacity:1}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">
+        <div class="seal">虾</div>
+        <div>
+          <h1>虾子曰：回声之境</h1>
+          <small>Level 1 · The Silent Gate Showcase</small>
+        </div>
+      </div>
+      <nav class="nav" id="nav" aria-label="页面导航"></nav>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="hero" id="top">
+      <div>
+        <div class="kicker">Interactive Visual Showcase</div>
+        <h2>第一关《沉默之门》</h2>
+        <p>这是一套为 Codex 和后续开发准备的视觉展示链接。整体方向锁定为：纪念碑谷式的静谧空间、极简界面、小角色与巨大建筑、英语通过“回声”融入机关。</p>
+        <div class="hero-actions">
+          <button class="pill primary" id="openCurrent">放大当前画面</button>
+          <button class="pill" id="playTour">自动巡游</button>
+        </div>
+        <div class="track" id="track" aria-label="素材进度"></div>
+      </div>
+
+      <section class="showcase" id="showcase" aria-label="互动预览区">
+        <div class="hero-img"><img id="heroImg" src="assets/01_level-card-main.png" alt="第一关主视觉｜沉默之门"></div>
+        <div class="hero-caption">
+          <div>
+            <b id="heroTitle">Main Visual · Level 1 · The Silent Gate</b>
+            <span id="heroDesc">作为 Codex 的第一视觉基准：小角色、大建筑、静谧水面、极简 UI 与不可能空间。</span>
+          </div>
+          <div class="count" id="heroCount">01</div>
+        </div>
+      </section>
+    </section>
+
+    <section class="section" id="main">
+      <div class="section-head">
+        <div>
+          <h3>主视觉与关卡体验</h3>
+          <div class="meta">Main visual / gameplay flow</div>
+        </div>
+      </div>
+      <div class="grid" id="mainGrid"></div>
+    </section>
+
+    <section class="section" id="system">
+      <div class="section-head">
+        <div>
+          <h3>系统素材与 UI 规范</h3>
+          <div class="meta">UI / character / modules / FX</div>
+        </div>
+      </div>
+      <div class="grid" id="systemGrid"></div>
+    </section>
+
+    <footer>DESIGN WITH INTENTION · BUILD WITH ECHO</footer>
+  </main>
+
+  <div class="stage" id="stage" aria-hidden="true" role="dialog" aria-label="图片预览">
+    <div class="stage-inner">
+      <img id="stageImg" src="" alt="">
+      <div class="stage-info">
+        <button class="icon-btn stage-prev" id="stagePrev" aria-label="上一张">‹</button>
+        <b id="stageTitle"></b>
+        <button class="icon-btn" id="stageNext" aria-label="下一张">›</button>
+        <button class="icon-btn" id="closeStage" aria-label="关闭">×</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls" aria-label="浏览控制">
+    <button id="prevBtn" aria-label="上一张">‹</button>
+    <button id="topBtn" aria-label="回到顶部">⌂</button>
+    <button id="nextBtn" aria-label="下一张">›</button>
+  </div>
+  <div class="toast" id="toast">可用左右方向键浏览</div>
+
+  <script>
+    const items = [
+      ["assets/01_level-card-main.png","第一关主视觉｜沉默之门","Level 1 · The Silent Gate","Main Visual","作为 Codex 的第一视觉基准：小角色、大建筑、静谧水面、极简 UI 与不可能空间。"],
+      ["assets/02_level-flow.png","关卡流程｜回声渐起","Gameplay Flow","Flow","三段式流程：初始平台、旋转塔体、沉默之门，帮助开发理解第一关节奏。"],
+      ["assets/03_gameplay-screens.png","游戏画面串联","Playable Screen Sequence","Screens","四个手机画面：开始、连接道路、麦克风聆听、世界苏醒。"],
+      ["assets/04_ui-kit.png","UI 套件｜章节与完成卡","Chapter / Level / Completion Cards","UI Kit","用于统一按钮、卡片、暂停层、进度、徽章与系统装饰风格。"],
+      ["assets/05_character-props.png","角色与道具设定","Character & Props","Character","虾子曰在纪念碑谷式世界中的角色比例、三视图、动作与关键道具。"],
+      ["assets/06_interaction-fx.png","互动特效与收集物","Interactive FX & Collectibles","FX","回声涟漪、路径激活、机关旋转、麦克风聆听、莲花绽放与世界苏醒。"],
+      ["assets/07_level-module-catalog.png","关卡模块目录","Environment Module Catalog","Modules","将第一关拆成可开发模块：平台、楼梯、桥梁、门、旋转塔、石碑、符文地砖等。"],
+      ["assets/08_module-overview.png","模块总览设计图","Modular Assets Overview","Module Sheet","进一步细化每个环境模块的形态、材质和统一比例。"],
+      ["assets/09_ui-screens.png","标题 / 加载 / 引导 / 通关界面","UI Screen Concepts","UI Screens","标题界面、思考加载、章节引导、通关觉醒四个关键展示画面。"],
+      ["assets/10_atmosphere-guide.png","背景与氛围指南","Background & Atmosphere Guide","Atmosphere","色彩、天空渐变、空间层次、苏醒前后氛围变化与构图参考。"],
+      ["assets/11_fx-reference.png","特效参考表","FX / VFX Reference","FX Sheet","可作为后续回声、光效、路径高亮与收集奖励的动效设计依据。"]
+    ].map(([path,title,subtitle,tag,desc])=>({path,title,subtitle,tag,desc}));
+
+    const sections = [{id:"top",label:"总览"},{id:"main",label:"主视觉"},{id:"system",label:"系统素材"}];
+    const nav = document.getElementById("nav");
+    const track = document.getElementById("track");
+    const topSection = document.getElementById("top");
+    const mainGrid = document.getElementById("mainGrid");
+    const systemGrid = document.getElementById("systemGrid");
+    const cards = [];
+    let current = 0;
+    let tourTimer = 0;
+    let touchX = 0;
+
+    sections.forEach((section,index)=>{
+      const button = document.createElement("button");
+      button.textContent = section.label;
+      button.onclick = () => document.getElementById(section.id).scrollIntoView({behavior:"smooth"});
+      button.classList.toggle("active", index === 0);
+      nav.appendChild(button);
+    });
+
+    items.forEach((item,index)=>{
+      const card = document.createElement("article");
+      card.className = "card";
+      card.tabIndex = 0;
+      card.innerHTML = `
+        <div class="art-wrap"><img class="art" src="${item.path}" alt="${item.title}" loading="lazy"></div>
+        <div class="caption">
+          <div><strong>${item.tag} · ${item.subtitle}</strong><p>${item.desc}</p></div>
+          <span class="tag">${String(index + 1).padStart(2,"0")}</span>
+        </div>`;
+      card.onclick = () => openStage(index);
+      card.onkeydown = event => {
+        if (event.key === "Enter" || event.key === " ") openStage(index);
+      };
+      (index < 3 ? mainGrid : systemGrid).appendChild(card);
+      cards.push(card);
+
+      const dot = document.createElement("button");
+      dot.ariaLabel = item.title;
+      dot.onclick = () => setCurrent(index, true);
+      track.appendChild(dot);
+    });
+
+    function setCurrent(index, scrollCard = false){
+      current = (index + items.length) % items.length;
+      const item = items[current];
+      heroImg.style.opacity = "0";
+      setTimeout(()=>{
+        heroImg.src = item.path;
+        heroImg.alt = item.title;
+        heroTitle.textContent = `${item.tag} · ${item.subtitle}`;
+        heroDesc.textContent = item.desc;
+        heroCount.textContent = String(current + 1).padStart(2,"0");
+        heroImg.style.opacity = "1";
+      }, 120);
+      cards.forEach((card,i)=>card.classList.toggle("active", i === current));
+      Array.from(track.children).forEach((dot,i)=>dot.classList.toggle("active", i === current));
+      if (scrollCard) cards[current].scrollIntoView({behavior:"smooth",block:"center"});
+    }
+
+    function openStage(index = current){
+      setCurrent(index);
+      stageImg.src = items[current].path;
+      stageImg.alt = items[current].title;
+      stageTitle.textContent = `${String(current + 1).padStart(2,"0")} · ${items[current].title}`;
+      stage.classList.add("show");
+      stage.setAttribute("aria-hidden","false");
+    }
+
+    function closeStage(){
+      stage.classList.remove("show");
+      stage.setAttribute("aria-hidden","true");
+    }
+
+    function move(delta){
+      setCurrent(current + delta, true);
+      if (stage.classList.contains("show")) openStage(current);
+    }
+
+    function toastMessage(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(()=>toast.classList.remove("show"), 1600);
+    }
+
+    prevBtn.onclick = () => move(-1);
+    nextBtn.onclick = () => move(1);
+    topBtn.onclick = () => topSection.scrollIntoView({behavior:"smooth"});
+    openCurrent.onclick = () => openStage(current);
+    closeStage.onclick = closeStage;
+    stagePrev.onclick = () => move(-1);
+    stageNext.onclick = () => move(1);
+    stage.onclick = event => { if (event.target === stage) closeStage(); };
+
+    playTour.onclick = () => {
+      if (tourTimer) {
+        clearInterval(tourTimer);
+        tourTimer = 0;
+        playTour.textContent = "自动巡游";
+        toastMessage("巡游已暂停");
+        return;
+      }
+      playTour.textContent = "暂停巡游";
+      toastMessage("开始自动巡游");
+      tourTimer = setInterval(()=>setCurrent(current + 1), 2200);
+    };
+
+    showcase.addEventListener("pointerdown", event => touchX = event.clientX);
+    showcase.addEventListener("pointerup", event => {
+      const diff = event.clientX - touchX;
+      if (Math.abs(diff) > 42) move(diff > 0 ? -1 : 1);
+      else openStage(current);
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeStage();
+      if (event.key === "ArrowRight") move(1);
+      if (event.key === "ArrowLeft") move(-1);
+    });
+
+    const appear = new IntersectionObserver(entries=>{
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("in");
+      });
+    }, {threshold:.2});
+    cards.forEach(card => appear.observe(card));
+
+    const sectionObserver = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if (!entry.isIntersecting) return;
+        const index = sections.findIndex(section => section.id === entry.target.id);
+        Array.from(nav.children).forEach((button,i)=>button.classList.toggle("active", i === index));
+      });
+    }, {threshold:.35});
+    sections.forEach(section=>sectionObserver.observe(document.getElementById(section.id)));
+
+    setCurrent(0);
+    setTimeout(()=>toastMessage("可点击、滑动或用方向键浏览"), 800);
+  </script>
+</body>
+</html>

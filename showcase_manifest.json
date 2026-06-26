@@ -1,0 +1,101 @@
+[
+  {
+    "src": "/mnt/data/沉默之门_回响之境.png",
+    "file": "01_level-card-main.png",
+    "title": "第一关主视觉｜沉默之门",
+    "subtitle": "Level 1 · The Silent Gate",
+    "tag": "Main Visual",
+    "desc": "作为 Codex 的第一视觉基准：小角色、大建筑、静谧水面、极简 UI 与不可能空间。",
+    "path": "assets/01_level-card-main.png"
+  },
+  {
+    "src": "/mnt/data/沉默之门_回声渐起.png",
+    "file": "02_level-flow.png",
+    "title": "关卡流程｜回声渐起",
+    "subtitle": "Gameplay Flow",
+    "tag": "Flow",
+    "desc": "三段式流程：初始平台、旋转塔体、沉默之门，帮助开发理解第一关节奏。",
+    "path": "assets/02_level-flow.png"
+  },
+  {
+    "src": "/mnt/data/回声之境关卡设计图.png",
+    "file": "03_gameplay-screens.png",
+    "title": "游戏画面串联",
+    "subtitle": "Playable Screen Sequence",
+    "tag": "Screens",
+    "desc": "四个手机画面：开始、连接道路、麦克风聆听、世界苏醒。",
+    "path": "assets/03_gameplay-screens.png"
+  },
+  {
+    "src": "/mnt/data/回声之境_ui_套件设计.png",
+    "file": "04_ui-kit.png",
+    "title": "UI 套件｜章节与完成卡",
+    "subtitle": "Chapter / Level / Completion Cards",
+    "tag": "UI Kit",
+    "desc": "用于统一按钮、卡片、暂停层、进度、徽章与系统装饰风格。",
+    "path": "assets/04_ui-kit.png"
+  },
+  {
+    "src": "/mnt/data/虾子曰_回声之境设定图.png",
+    "file": "05_character-props.png",
+    "title": "角色与道具设定",
+    "subtitle": "Character & Props",
+    "tag": "Character",
+    "desc": "虾子曰在纪念碑谷式世界中的角色比例、三视图、动作与关键道具。",
+    "path": "assets/05_character-props.png"
+  },
+  {
+    "src": "/mnt/data/互动特效与收集物参考图.png",
+    "file": "06_interaction-fx.png",
+    "title": "互动特效与收集物",
+    "subtitle": "Interactive FX & Collectibles",
+    "tag": "FX",
+    "desc": "回声涟漪、路径激活、机关旋转、麦克风聆听、莲花绽放与世界苏醒。",
+    "path": "assets/06_interaction-fx.png"
+  },
+  {
+    "src": "/mnt/data/沉默之门关卡设计图.png",
+    "file": "07_level-module-catalog.png",
+    "title": "关卡模块目录",
+    "subtitle": "Environment Module Catalog",
+    "tag": "Modules",
+    "desc": "将第一关拆成可开发模块：平台、楼梯、桥梁、门、旋转塔、石碑、符文地砖等。",
+    "path": "assets/07_level-module-catalog.png"
+  },
+  {
+    "src": "/mnt/data/回声之境模块总览设计图.png",
+    "file": "08_module-overview.png",
+    "title": "模块总览设计图",
+    "subtitle": "Modular Assets Overview",
+    "tag": "Module Sheet",
+    "desc": "进一步细化每个环境模块的形态、材质和统一比例。",
+    "path": "assets/08_module-overview.png"
+  },
+  {
+    "src": "/mnt/data/回声之境_ui_设计概念.png",
+    "file": "09_ui-screens.png",
+    "title": "标题 / 加载 / 引导 / 通关界面",
+    "subtitle": "UI Screen Concepts",
+    "tag": "UI Screens",
+    "desc": "标题界面、思考加载、章节引导、通关觉醒四个关键展示画面。",
+    "path": "assets/09_ui-screens.png"
+  },
+  {
+    "src": "/mnt/data/沉默之门概念指南.png",
+    "file": "10_atmosphere-guide.png",
+    "title": "背景与氛围指南",
+    "subtitle": "Background & Atmosphere Guide",
+    "tag": "Atmosphere",
+    "desc": "色彩、天空渐变、空间层次、苏醒前后氛围变化与构图参考。",
+    "path": "assets/10_atmosphere-guide.png"
+  },
+  {
+    "src": "/mnt/data/特效参考表设计展示.png",
+    "file": "11_fx-reference.png",
+    "title": "特效参考表",
+    "subtitle": "FX / VFX Reference",
+    "tag": "FX Sheet",
+    "desc": "可作为后续回声、光效、路径高亮与收集奖励的动效设计依据。",
+    "path": "assets/11_fx-reference.png"
+  }
+]
